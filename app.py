@@ -6,11 +6,11 @@ from flask import Flask, render_template_string, request, redirect, send_from_di
 app = Flask(__name__)
 
 # === CONFIG ===
-BASE_DIR = Path(__file__).resolve().parent.parent      # LLMRefactoring/
-IMAGE_FOLDER = BASE_DIR / "Human_survey"
-CSV_INDEX = IMAGE_FOLDER / "survey_index.csv"
+     # LLMRefactoring/
+IMAGE_FOLDER =  "Human_survey"
+CSV_INDEX = "Human_survey/survey_index.csv"
 NUM_PAIRS = 10
-RESPONSE_FILE = IMAGE_FOLDER / "responses.csv"
+RESPONSE_FILE = "Human_survey/responses.csv"
 
 # === HTML TEMPLATE ===
 HTML_TEMPLATE = """
