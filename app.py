@@ -70,7 +70,7 @@ HTML_TEMPLATE = """
 def serve_image(filename):
     return send_from_directory(IMAGE_FOLDER, filename)
 
-import uuid  # Add this to your imports at the top
+import uuid 
 from flask import make_response
 
 @app.route('/', methods=['GET', 'POST'])
