@@ -23,22 +23,30 @@ HTML_TEMPLATE = """
     <style>
         .pair-block { margin-bottom: 40px; }
         img { max-width: 100%; height: auto; border: 1px solid #ccc; margin-bottom: 10px; }
+        .subtitle { font-size: 0.95rem; color: #666; margin-bottom: 15px; }
     </style>
 </head>
 <body class="container py-4">
-    <h1 class="mb-4">Code Refactoring Preference Survey</h1>
+    <h1 class="mb-2">Code Refactoring Preference Survey</h1>
+
     <form method="post">
         {% for pair in pairs %}
             <div class="pair-block">
                 <h5>Pair {{ loop.index }}</h5>
-                <div>
-                    <label>Option A</label>
+                <p class="subtitle">
+                    Please choose the option you prefer based on <strong>complexity</strong>, <strong>readability</strong>, and <strong>maintainability</strong>.
+                </p>
+
+                <div class="mb-2">
+                    <label class="form-label">Option A</label><br>
                     <img src="{{ url_for('serve_image', filename=pair[0]) }}" alt="Option A">
                 </div>
-                <div>
-                    <label>Option B</label>
+
+                <div class="mb-2">
+                    <label class="form-label">Option B</label><br>
                     <img src="{{ url_for('serve_image', filename=pair[1]) }}" alt="Option B">
                 </div>
+
                 <div class="form-check mt-2">
                     <input class="form-check-input" type="radio" name="pair_{{ loop.index0 }}" value="A" required>
                     <label class="form-check-label">Prefer A</label>
@@ -53,6 +61,7 @@ HTML_TEMPLATE = """
     </form>
 </body>
 </html>
+
 
 """
 
