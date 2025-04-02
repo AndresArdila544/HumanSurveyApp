@@ -1,0 +1,11 @@
+submission_id,pair,image_A,image_B,chosen
+8416cb54-c00a-4d5c-9d53-a2b1cd05e132,pair_1,2ffe3da3-bb2d-49a2-8e5e-370636ba15ac.jpg,20cceb67-401c-431a-a8d2-6fc7a5add2f1.jpg,A,concise;readable;maintainable
+8416cb54-c00a-4d5c-9d53-a2b1cd05e132,pair_2,918fced5-b205-4b25-bf2e-99e84ff57c57.jpg,57607d11-3165-4f46-b571-9661c43fdb7f.jpg,B,concise;readable;maintainable
+8416cb54-c00a-4d5c-9d53-a2b1cd05e132,pair_3,83b89e8c-39e0-4643-b8f4-ca9818c738be.jpg,317f5f34-a19d-4fa5-ba6d-6156a30f7618.jpg,B,
+8416cb54-c00a-4d5c-9d53-a2b1cd05e132,pair_4,df079fbd-f63b-4d88-895b-55392b120551.jpg,722e0e41-373f-47a9-99f0-b015dcd0ac9e.jpg,B,
+8416cb54-c00a-4d5c-9d53-a2b1cd05e132,pair_5,878377df-956d-499a-a207-95bb2e89b48c.jpg,8b6dc4a5-5f0e-43cf-bc43-a352f020d8bf.jpg,B,
+8416cb54-c00a-4d5c-9d53-a2b1cd05e132,pair_6,871327ff-c0f6-40bf-9db7-98cb940eaac9.jpg,946e95c3-e9d8-4381-8554-5535452f8903.jpg,B,
+8416cb54-c00a-4d5c-9d53-a2b1cd05e132,pair_7,640bd170-f019-4e82-8020-f07712396f30.jpg,226552e0-fc0a-4625-9645-c318a8a91422.jpg,B,
+8416cb54-c00a-4d5c-9d53-a2b1cd05e132,pair_8,d66af706-2c5c-4ec0-a6bb-19f14350e58f.jpg,45118b31-71ac-43d6-9246-2a1d5a8a2310.jpg,A,
+8416cb54-c00a-4d5c-9d53-a2b1cd05e132,pair_9,74b5f440-17b6-4eb3-b1c1-c137f08eb236.jpg,ca72ea8c-ac37-4969-8996-8eece69f34d2.jpg,B,
+8416cb54-c00a-4d5c-9d53-a2b1cd05e132,pair_10,6f4f4862-e080-42ef-bb8b-95f6b9490c6f.jpg,00865747-fe93-47de-aece-9d048f0daff4.jpg,A,concise;readable;maintainable

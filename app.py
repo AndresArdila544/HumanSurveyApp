@@ -11,6 +11,7 @@ IMAGE_FOLDER =  "Human_survey"
 CSV_INDEX = "Human_survey/survey_index.csv"
 NUM_PAIRS = 10
 RESPONSE_FILE = "Human_survey/responses.csv"
+DEMOGRAPHICS_FILE = "Human_survey/demographics.csv"
 
 # === HTML TEMPLATE ===
 HTML_TEMPLATE = """
@@ -29,12 +30,36 @@ HTML_TEMPLATE = """
 <body class="container py-4">
     <h1 class="mb-2">Code Refactoring Preference Survey</h1>
 
+<p>This survey is part of a research study on how people perceive automatically refactored Python code. We are investigating how readability, maintainability, and complexity influence code preferences.</p>
+<p>Your participation is anonymous. Your feedback will contribute to understanding the effectiveness of LLMs as refactoring tools.</p>
+<p><strong>Instructions:</strong> You'll see 10 pairs of Python code snippets. For each pair, select the version you prefer.</p>
+
+<hr>
+
+
+
+
     <form method="post">
+    <!-- Demographics -->
+<div class="mb-3">
+  <label for="experience" class="form-label"><strong>How many years of experience do you have with programming?</strong></label>
+  <input type="number" class="form-control" name="experience" id="experience" min="0" max="50" required>
+</div>
+
+<div class="mb-4">
+  <label for="python_skill" class="form-label"><strong>How familiar are you with Python?</strong></label>
+  <select class="form-select" name="python_skill" id="python_skill" required>
+    <option value="">Select...</option>
+    <option value="beginner">Beginner</option>
+    <option value="intermediate">Intermediate</option>
+    <option value="expert">Expert</option>
+  </select>
+</div>
         {% for pair in pairs %}
             <div class="pair-block">
                 <h5>Pair {{ loop.index }}</h5>
                 <p class="subtitle">
-                    Please choose the option you prefer based on <strong>complexity</strong>, <strong>readability</strong>, and <strong>maintainability</strong>.
+                    Please choose the option you prefer.
                 </p>
 
                 <div class="mb-2">
@@ -55,6 +80,22 @@ HTML_TEMPLATE = """
                     <input class="form-check-input" type="radio" name="pair_{{ loop.index0 }}" value="B" required>
                     <label class="form-check-label">Prefer B</label>
                 </div>
+                <!-- Reason checkboxes -->
+<div class="mt-2">
+  <p><strong>Why?</strong> (Select all that apply)</p>
+  <div class="form-check">
+    <input class="form-check-input" type="checkbox" name="reason_{{ loop.index0 }}[]" value="concise">
+    <label class="form-check-label">More concise</label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="checkbox" name="reason_{{ loop.index0 }}[]" value="readable">
+    <label class="form-check-label">More readable</label>
+  </div>
+  <div class="form-check">
+    <input class="form-check-input" type="checkbox" name="reason_{{ loop.index0 }}[]" value="maintainable">
+    <label class="form-check-label">Easier to maintain</label>
+  </div>
+</div>
             </div>
         {% endfor %}
         <button type="submit" class="btn btn-primary">Submit</button>
@@ -72,6 +113,7 @@ def serve_image(filename):
 
 import uuid  # Add this to your imports at the top
 from flask import make_response
+import os
 
 @app.route('/', methods=['GET', 'POST'])
 def survey():
@@ -88,15 +130,32 @@ def survey():
     pairs = [(row['original_image'], row['refactored_image']) for row in sampled]
 
     if request.method == 'POST':
+        experience = request.form.get("experience")
+        python_skill = request.form.get("python_skill")
         submission_id = str(uuid.uuid4())
         response_rows = []
         for i, (img_a, img_b) in enumerate(pairs):
             choice = request.form.get(f"pair_{i}")
             if choice is None:
                 return "❌ Please answer all questions."
-            response_rows.append([submission_id, f"pair_{i+1}", img_a, img_b, choice])
+            reasons = request.form.getlist(f"reason_{i}[]")  # Collect all selected reasons
+            response_rows.append([
+                submission_id,
+                f"pair_{i+1}",
+                img_a,
+                img_b,
+                choice,
+                ";".join(reasons) if reasons else ""
+            ])
 
-        write_header = not RESPONSE_FILE.exists()
+        write_demo_header = not os.path.exists(DEMOGRAPHICS_FILE)
+        with open(DEMOGRAPHICS_FILE, "a", encoding="utf-8", newline='') as f:
+            writer = csv.writer(f)
+            if write_demo_header:
+                writer.writerow(["submission_id", "experience_years", "python_skill_level"])
+            writer.writerow([submission_id, experience, python_skill])
+
+        write_header = not os.path.exists(RESPONSE_FILE)
         resp = make_response(redirect("/"))
         resp.set_cookie("has_submitted", "true")
         with open(RESPONSE_FILE, "a", encoding="utf-8", newline='') as f:
